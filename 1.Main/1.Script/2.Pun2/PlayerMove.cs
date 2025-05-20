@@ -58,6 +58,7 @@ public class PlayerMove : MonoBehaviour
             camera.SetActive(true);
         }else
         {
+            GetComponent<Rigidbody>().useGravity = false;
             transform.GetComponent<Collider>().enabled = false;
             this.enabled = false; // ��ũ��Ʈ ��������
         }
@@ -74,6 +75,7 @@ public class PlayerMove : MonoBehaviour
     public async void Custom()
     {
         if (animator != null) return;
+
         if (DataBase.Instance == null || DataBase.Instance.customData == null)
         {
             Debug.LogError("DataBase.Instance or customData is null!");

@@ -1,5 +1,6 @@
 using Photon.Pun;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -50,7 +51,6 @@ public class PlayerMove : MonoBehaviour
         // �г���
         nickNameText.text = pv.IsMine ? PhotonNetwork.NickName : pv.Owner.NickName;
 
-        pv.RPC("Custom", RpcTarget.AllBuffered); // ����ȭ
 
         if (pv.IsMine)
         {
@@ -67,6 +67,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (pv.IsMine)
         {
+            pv.RPC("Custom", RpcTarget.AllBuffered); // ����ȭ
             PosSave();
         }
     }
@@ -75,7 +76,7 @@ public class PlayerMove : MonoBehaviour
     public async void Custom()
     {
         if (animator != null) return;
-
+        Debug.Log(pv.IsMine ? PhotonNetwork.NickName : pv.Owner.NickName);
         if (DataBase.Instance == null || DataBase.Instance.customData == null)
         {
             Debug.LogError("DataBase.Instance or customData is null!");
@@ -156,7 +157,8 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(custom == false) Move();
+        //if(custom == false) 
+        if(animator != null)Move();
 
 
     }
@@ -208,11 +210,15 @@ public class PlayerMove : MonoBehaviour
     [PunRPC]
     public void Animation(string name, int num)
     {
+        if (animator == null) return;
+
         animator.SetInteger(name, num);
     }
     [PunRPC]
     public void JumpRPC()
     {
+        if (animator == null) return;
+
         animator.SetTrigger("Jump");
         rb.velocity = Vector3.zero;
         rb.AddForce(Vector3.up * jumpP);

@@ -178,10 +178,12 @@ public class PlayerMove : MonoBehaviour
 
             Vector3 axis = speed * transform.TransformDirection(new Vector3(x, 0, z).normalized);
 
+            /*
             animator_Target_P.LookAt(animator_Target_P.position + axis);
 
             transform.LookAt(transform.position - new Vector3(cm.direction.normalized.x,0, cm.direction.normalized.z));
-
+            */
+            pv.RPC("RotateSet", RpcTarget.All, axis);
 
             rb.velocity = new Vector3(axis.x, rb.velocity.y, axis.z);
 
@@ -206,6 +208,16 @@ public class PlayerMove : MonoBehaviour
 
 
         }
+    }
+    [PunRPC]
+    public void RotateSet(Vector3 axis)
+    {
+        if (animator == null) return;
+
+
+        animator_Target_P.LookAt(animator_Target_P.position + axis);
+
+        transform.LookAt(transform.position - new Vector3(cm.direction.normalized.x, 0, cm.direction.normalized.z));
     }
     [PunRPC]
     public void Animation(string name, int num)

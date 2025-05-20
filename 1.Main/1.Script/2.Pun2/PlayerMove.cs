@@ -50,10 +50,7 @@ public class PlayerMove : MonoBehaviour
         // �г���
         nickNameText.text = pv.IsMine ? PhotonNetwork.NickName : pv.Owner.NickName;
 
-        if (pv.IsMine)
-        {
-            pv.RPC("Custom", RpcTarget.AllBuffered); // ����ȭ
-        }
+        pv.RPC("Custom", RpcTarget.AllBuffered); // ����ȭ
 
         if (pv.IsMine)
         {
@@ -76,6 +73,7 @@ public class PlayerMove : MonoBehaviour
     [PunRPC]
     public async void Custom()
     {
+        if (animator != null) return;
         if (DataBase.Instance == null || DataBase.Instance.customData == null)
         {
             Debug.LogError("DataBase.Instance or customData is null!");
@@ -99,9 +97,9 @@ public class PlayerMove : MonoBehaviour
 
             if (modelInstance != null)
             {
-                var animatorView = modelInstance.GetComponent<PhotonAnimatorView>();
-                var transformView = modelInstance.GetComponent<PhotonTransformView>();
-                
+                //var animatorView = modelInstance.GetComponent<PhotonAnimatorView>();
+                //var transformView = modelInstance.GetComponent<PhotonTransformView>();
+                /*
                 if (animatorView == null || transformView == null)
                 {
                     Debug.LogError("Required components (PhotonAnimatorView or PhotonTransformView) are missing on the model!");
@@ -111,6 +109,7 @@ public class PlayerMove : MonoBehaviour
 
                 animatorView.enabled = true;
                 transformView.enabled = true;
+                */
                 animator = modelInstance.GetComponent<Animator>();
 
                 if (animator == null)
@@ -184,9 +183,11 @@ public class PlayerMove : MonoBehaviour
 
             if (axis != Vector3.zero)
             {
-                animator.SetInteger("MoveNum", 1);
+                pv.RPC("Animation", RpcTarget.All,"MoveNum",1);
+                //animator.SetInteger("MoveNum", 1);
             }
-            else animator.SetInteger("MoveNum", 0);
+            else
+                pv.RPC("Animation", RpcTarget.All,"MoveNum", 0);
 
 
             //����
@@ -196,7 +197,6 @@ public class PlayerMove : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space) && isGround)
             {
-                animator.SetTrigger("Jump");
                 pv.RPC("JumpRPC", RpcTarget.All);
             }
 
@@ -204,8 +204,14 @@ public class PlayerMove : MonoBehaviour
         }
     }
     [PunRPC]
+    public void Animation(string name, int num)
+    {
+        animator.SetInteger(name, num);
+    }
+    [PunRPC]
     public void JumpRPC()
     {
+        animator.SetTrigger("Jump");
         rb.velocity = Vector3.zero;
         rb.AddForce(Vector3.up * jumpP);
     }

@@ -7,10 +7,10 @@ public class Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Save("2401017", "±èµµ±Õ", "1234");
+        Save("2401017", "í™ê¸¸ë™", "1234");
     }
 
-    [System.Serializable] //Á÷¿­È­
+    [System.Serializable] //ì§ë ¬í™”
     public class PostDataSet
     {
         public string stu_number;
@@ -20,7 +20,7 @@ public class Test : MonoBehaviour
 
     public void Save(string _student_num, string _name, string _password)
     {
-        // º¸³»´Â µ¥ÀÌÅÍ °´Ã¼ (JSON Çü½ÄÀ¸·Î)
+        // ë°ì´í„° ê°ì²´ ìƒì„± (JSON ì§ë ¬í™”ìš©)
         PostDataSet data = new PostDataSet
         {
             stu_number = _student_num,
@@ -28,16 +28,12 @@ public class Test : MonoBehaviour
             stu_password = _password
         };
 
-        // °´Ã¼¸¦ JSON Çü½ÄÀ¸·Î º¯È¯
+        // ê°ì²´ë¥¼ JSON ë°ì´í„°ë¡œ ë³€í™˜
         string jsonData = JsonUtility.ToJson(data);
         Debug.Log(jsonData);
 
         DataBase.Instance.SendMessageApi(jsonData, "SignUp", (Success, request) => {
-
             Debug.LogError(request);
-
         });
-        
-
     }
 }

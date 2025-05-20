@@ -1,0 +1,213 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AllMaterials
+  m_EditorClassIdentifier: 
+  m_GroupName: AllMaterials
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 5d8bc71c18eb85b4080819a61a3271cd
+  m_SerializeEntries:
+  - m_GUID: 133329c838301ba4494f40da020fcdeb
+    m_Address: Dungeons_Texture_Soft_Particle
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16025479cbc59c145aed336aa4c0d776
+    m_Address: Dungeons_Material_Dust_Soft
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20e258dfeee82c249a858f51e004546b
+    m_Address: PolygonFantasyKingdom_Mat_03_B
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 270fd5c64f7118c4495be93b7ce2530c
+    m_Address: PolygonFantasyKingdom_Texture_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31321ba15b8f8eb4c954353edc038b1d
+    m_Address: Lit
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39cc2bc8825246640a30ce3ec75c63cb
+    m_Address: PolygonFantasyKingdom_Mat_Horse_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42b64fdb315e3054ea757d8d1c4bcfa7
+    m_Address: Dungeon_Material_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52544eaa2c194144ab7b28fa647d781c
+    m_Address: PolygonApocalypse_Emissive_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5bb68a94905ffc0418608fc7e572ea42
+    m_Address: PolygonApocalypse_Material_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c99cec570bb90c4db42c3a608969eee
+    m_Address: PolygonApocalypse_Normal
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5ebf91eeb29c9034f8ce66726a8671f8
+    m_Address: PolygonFantasyKingdom_Texture_Paintings_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 636738433ebdc7246bc1fb7e2a55b335
+    m_Address: PolygonFantasyKingdom_Texture_Horse_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71e41e43b459a244abaf5acca76b89ee
+    m_Address: PolygonFantasyKingdom_Mat_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 782a02e7886cd2d4c8585a3425a67930
+    m_Address: PolygonFantasyKingdom_Texture_Horse_03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b6e8693e1d992d42b4e4e946a43e145
+    m_Address: Dungeons_Texture_FloorTiles_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 822402f846727b24890cc7d5f5430675
+    m_Address: PolygonApocalypse_Texture_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d626288425427f42806b70f30e50a98
+    m_Address: Dungeons_Texture_FloorTiles_Normal
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91ec928f471bba747ad8c1a981051402
+    m_Address: Emmisive_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: abe5e86debb976a42996c0b82e08fcd8
+    m_Address: PolygonFantasyKingdom_Mat_Horse_03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b24b57e0cfed05643be34b0256df875e
+    m_Address: Dungeons_Texture_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b64531222cca0504c89bf60a156a2157
+    m_Address: Dungeon_Material_TextureFloor
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b8d8f0f13772c374d8d6354900c44e30
+    m_Address: Dungeons_Crystal_Metallic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db5f0d67df793824fb0c40433a95a8d8
+    m_Address: FX_Dark
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ddc131df32f11f54a98daf8633aee1a3
+    m_Address: PolygonFantasyKingdom_Texture_Emmisive
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee4ca7d229aa8f04cab686907c5f3396
+    m_Address: PolygonFantasyKingdom_Texture_Normal_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1ab90401dc7fa2418d92c4ee845cc35
+    m_Address: PolygonFantasyKingdom_Mat_Paintings
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f49f627af78c74843923759d1c40fa86
+    m_Address: PolygonFantasyKingdom_Texture_03_B
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Photon
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3e9ade275626e764f8eefd641d64fe67, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3eec09c0439834544b5057a47e6179f6, type: 2}

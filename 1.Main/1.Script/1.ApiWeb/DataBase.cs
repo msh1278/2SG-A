@@ -4,12 +4,18 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using System.Data;
+using Photon.Pun;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class DataBase : MonoBehaviour
 {
+    public CustomData customData { get; set; }
     public int stu_local_code { get; set; } = 1;
 
-    private string nodeURL = "ws://127.0.0.1:8080";
+    private string nodeURL = "ws://106.248.231.106:9000";
 
     private static DataBase instance = null;
 
@@ -17,61 +23,138 @@ public class DataBase : MonoBehaviour
     StateRe stateRe = StateRe.ready;
 
     private UserID_Pw data;
+    public UserID_Pw Data
+    {
+        get { return data; }
+    }
 
-    private bool loginOn = false;// ·Î±×ÀÎ ÁßÀÎ°¡?
-    private bool isReceiving = false; // ÇöÀç ¼ö½Å ÁßÀÎÁö È®ÀÎ
+    public PostDataSet dataUser;
+    public PostDataSet DataUser
+    {
+        get { return dataUser; }
+    }
+
+    private bool loginOn = false;
+    private bool isReceiving = false;
+
+    private readonly object _wsLock = new object();
+    private bool _isSending = false;
+    private Queue<(string message, string path, Action<bool, string> callback)> _messageQueue = new Queue<(string, string, Action<bool, string>)>();
+    private bool _isProcessingQueue = false;
+
     [System.Serializable]
     public class UserID_Pw
     {
-        public string stu_number;
-        public string stu_password;
+        public string email;
+        public string password;
         public int stu_local_code;
+        public bool online;
         public string time;
+        public string map_name;
+        public float posPlayerX;
+        public float posPlayerY;
+        public float posPlayerZ;
+        public string modelName;
+        public int modelNum;
     }
+
+    [System.Serializable]
+    public class PostDataSet
+    {
+        public string stu_name;
+        public string stu_password;
+        public string stu_number;
+    }
+
     enum StateRe
     {
         trying,
         ready
     }
-    //½Ì±ÛÅæ
+
+    [System.Serializable]
+    public class CustomData
+    {
+        public string email;
+        public string modelName;
+        public int customNum;
+        // Add other custom data fields here
+    }
+
     private async void Awake()
     {
+        // Initialize the main thread dispatcher
+        UnityMainThreadDispatcher.Initialize();
+        
         Singleton();
         await ConnectWebSocketAsync();
     }
 
-    // Connect WebSocket
     private async Task ConnectWebSocketAsync()
     {
         if(stateRe == StateRe.trying)
         {
             return;
         }
-        stateRe = StateRe.trying;//½ÃµµÁß
-        while (true)
+        stateRe = StateRe.trying;
+        
+        int retryCount = 0;
+        const int maxRetries = 3;
+        
+        while (retryCount < maxRetries)
         {
             try
             {
-                /*
                 if (ws.State == WebSocketState.Open)
                 {
-                    return; // ÀÌ¹Ì ¿¬°áÀÌ µÇ¾îÀÖÀ¸¸é Ãß°¡ ¿¬°áÀ» ½ÃµµÇÏÁö ¾ÊÀ½
+                    Debug.Log("WebSocketì´ ì´ë¯¸ ì—°ê²°ë˜ì–´ ìˆìŠµë‹ˆë‹¤.");
+                    stateRe = StateRe.ready;
+                    return;
                 }
-                */
-                ws = new ClientWebSocket();
-                await ws.ConnectAsync(new Uri(nodeURL), CancellationToken.None);
-                Debug.Log("WebSocket ¿¬°á ¼º°ø");
-                stateRe = StateRe.ready;//´Ù½Ã ½Ãµµ °¡´É
 
+                if (ws.State != WebSocketState.Closed)
+                {
+                    try {
+                        await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Reconnecting", CancellationToken.None);
+                    } catch (Exception) {
+                        // Ignore close errors
+                    }
+                }
+
+                ws = new ClientWebSocket();
+                ws.Options.KeepAliveInterval = TimeSpan.FromSeconds(30);
+                
+                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
+                {
+                    await ws.ConnectAsync(new Uri(nodeURL), cts.Token);
+                }
+                
+                Debug.Log("WebSocket ì—°ê²° ì„±ê³µ");
+                stateRe = StateRe.ready;
                 return;
+            }
+            catch (WebSocketException wsEx)
+            {
+                Debug.LogError($"WebSocket ì—°ê²° ì‹¤íŒ¨ (ì‹œë„ {retryCount + 1}/{maxRetries}): {wsEx.Message}");
+                retryCount++;
+                if (retryCount < maxRetries)
+                {
+                    await Task.Delay(1000 * retryCount);
+                }
             }
             catch (Exception ex)
             {
-                Debug.LogError($"WebSocket ¿¬°á ½ÇÆĞ: {ex.Message}");
-
-                await Task.Delay(1000); // 1ÃÊ ÈÄ ´Ù½Ã ½Ãµµ
+                Debug.LogError($"ì—°ê²° ì¤‘ ì˜ˆì™¸ ë°œìƒ (ì‹œë„ {retryCount + 1}/{maxRetries}): {ex.Message}");
+                retryCount++;
+                if (retryCount < maxRetries)
+                {
+                    await Task.Delay(1000 * retryCount);
+                }
             }
         }
+        
+        Debug.LogError("WebSocket ì—°ê²° ìµœëŒ€ ì‹œë„ íšŸìˆ˜ ì´ˆê³¼");
+        stateRe = StateRe.ready;
     }
 
     private void Singleton()
@@ -79,9 +162,7 @@ public class DataBase : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-
             DontDestroyOnLoad(this.gameObject);
-
         }
         else
         {
@@ -91,7 +172,8 @@ public class DataBase : MonoBehaviour
             }
         }
     }
-    public static DataBase Instance // ½Ì±ÛÅæ º¸¾È¼º
+
+    public static DataBase Instance
     {
         get
         {
@@ -103,136 +185,315 @@ public class DataBase : MonoBehaviour
         }
     }
 
-    //-------------------------------------------------------
-
-    public async void SendMessageApi(string message, string path, Action<bool, string> requestMsg)
+    private async Task ProcessMessageQueue()
     {
-        //await ws.ConnectAsync(new System.Uri("ws://127.0.0.1:8080"), CancellationToken.None);
-        await SendMessage(message, path, requestMsg);
-    }
-    async Task SendMessage(string message, string path, Action<bool, string> requestMsg)
-    {   while (true)
-        {
-            if (isReceiving)
-            {
-                Debug.Log("ÀÌ¹Ì ½ÇÇà Áß");
-                await Task.Delay(100);
-            }
-            else
-            {
-                Debug.Log("Àç»ı");
-                break;
-            }
-        }
-        // ÀÌ¹Ì ¼ö½Å ÁßÀÌ¸é ½ÇÇàÇÏÁö ¾ÊÀ½
-        isReceiving = true;
+        if (_isProcessingQueue) return;
+        _isProcessingQueue = true;
 
-        message = path + "{****}" + message;
         try
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(message);//¸Ş½ÃÁö¸¦ UTF-8 ¹ÙÀÌÆ® ¹è¿­·Î º¯È¯
-            await ws.SendAsync(new System.ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
-            //WebSocketMessageType.Text ¡æ ¸Ş½ÃÁö Å¸ÀÔÀÌ ÅØ½ºÆ® µ¥ÀÌÅÍ
-
-
-            byte[] buffer = new byte[1024];
-            WebSocketReceiveResult result = await ws.ReceiveAsync(new System.ArraySegment<byte>(buffer), CancellationToken.None);
-            string receivedMsg = Encoding.UTF8.GetString(buffer, 0, result.Count);
-
-            //Debug.Log(receivedMsg);//¿¡·¯½Ã ¿¡·¯ ¸Ş½ÃÁö ¹Ş±â
-            requestMsg?.Invoke(true, receivedMsg);
-        }
-        catch (WebSocketException wsEx)
-        {
-            await ConnectWebSocketAsync();
-            // WebSocket Àç ½Ãµµ
-
-
-
-            Debug.LogError($"WebSocket Àü¼Û ½ÇÆĞ: {wsEx.Message}");
-            requestMsg?.Invoke(false, $"WebSocket ¿À·ù: {wsEx.Message}");
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"¿¹±âÄ¡ ¾ÊÀº ¿À·ù ¹ß»ı: {ex.Message}");
-            requestMsg?.Invoke(false, $"¿À·ù ¹ß»ı: {ex.Message}");
+            while (_messageQueue.Count > 0)
+            {
+                var (message, path, callback) = _messageQueue.Dequeue();
+                await SendMessageInternal(message, path, callback);
+            }
         }
         finally
         {
-            Debug.Log("finally");
-            isReceiving = false; // ¼ö½Å ¿Ï·á ÈÄ ´Ù½Ã ¹ŞÀ» ¼ö ÀÖµµ·Ï º¯°æ
+            _isProcessingQueue = false;
         }
     }
-    private async void OnApplicationQuit()
+
+    private async Task SendMessageInternal(string message, string path, Action<bool, string> requestMsg)
     {
-        if (ws.State == WebSocketState.Open)
+        int maxRetries = 3;
+        int retryCount = 0;
+
+        while (retryCount < maxRetries)
         {
-            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Application is quitting", CancellationToken.None);
-            Debug.Log("WebSocket ¿¬°á Á¾·á");
-        }
-    }
-    public void Login(string _id, string _password)
-    {
-        if (loginOn) return;
-
-        DataBase.Instance.stu_local_code = UnityEngine.Random.Range(1, 2147483646);
-        // º¸³»´Â µ¥ÀÌÅÍ (JSON Çü½ÄÀ¸·Î)
-        data = new UserID_Pw
-        {
-            stu_number = _id,
-            stu_password = _password,
-            stu_local_code = DataBase.Instance.stu_local_code, //·£´ı ¼ö ( ·Î±×ÀÎ ½Ã °íÀ¯ ´Ù¸¥ ¾ÆÀÌµğ¶û °°¾Æµµ µÊ )
-            time = DateTime.Now.ToString(("mm")) //ÇöÀç ºĞ ÀúÀå
-        };
-
-        // JSON Çü½ÄÀ¸·Î º¯È¯
-        string jsonData = JsonUtility.ToJson(data);
-        Debug.Log(jsonData);
-
-        DataBase.Instance.SendMessageApi(jsonData, "Login", (Success, request) => {
-            Debug.Log(request);
-            if(request == "1")
+            try
             {
-                //·Î±×ÀÎ ¼º°ø ½Ã
-                loginOn = true;
-                //StartCoroutine(DataUpdate());
+                if (ws.State != WebSocketState.Open)
+                {
+                    await ConnectWebSocketAsync();
+                }
+
+                string formattedMessage = path + "{****}" + message;
+                byte[] bytes = Encoding.UTF8.GetBytes(formattedMessage);
+
+                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
+                {
+                    await ws.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, cts.Token);
+                    
+                    byte[] buffer = new byte[4096];
+                    WebSocketReceiveResult result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), cts.Token);
+                    string receivedMsg = Encoding.UTF8.GetString(buffer, 0, result.Count);
+
+                    if (result.MessageType == WebSocketMessageType.Close)
+                    {
+                        throw new WebSocketException("ì„œë²„ê°€ ì—°ê²°ì„ ì¢…ë£Œí–ˆìŠµë‹ˆë‹¤.");
+                    }
+
+                    requestMsg?.Invoke(true, receivedMsg);
+                    return;
+                }
             }
-        });
+            catch (Exception ex)
+            {
+                Debug.LogError($"ë©”ì‹œì§€ ì „ì†¡ ì¤‘ ì˜¤ë¥˜ ë°œìƒ (ì‹œë„ {retryCount + 1}/{maxRetries}): {ex.Message}");
+                retryCount++;
+                
+                if (retryCount < maxRetries)
+                {
+                    await Task.Delay(1000 * retryCount);
+                    try
+                    {
+                        await ConnectWebSocketAsync();
+                    }
+                    catch
+                    {
+                        // ì—°ê²° ì¬ì‹œë„ ì‹¤íŒ¨ëŠ” ë‹¤ìŒ ë°˜ë³µì—ì„œ ì²˜ë¦¬
+                    }
+                }
+            }
+        }
 
-
+        requestMsg?.Invoke(false, "ë©”ì‹œì§€ ì „ì†¡ ì‹¤íŒ¨: ìµœëŒ€ ì¬ì‹œë„ íšŸìˆ˜ ì´ˆê³¼");
     }
+
+    public async void SendMessageApi(string message, string path, Action<bool, string> requestMsg)
+    {
+        lock (_wsLock)
+        {
+            _messageQueue.Enqueue((message, path, requestMsg));
+        }
+
+        await ProcessMessageQueue();
+    }
+
+    private async Task SendMessageWithNewConnection(ClientWebSocket ws, string message, string path, Action<bool, string> requestMsg)
+    {
+        try
+        {
+            string formattedMessage = path + "{****}" + message;
+            byte[] bytes = Encoding.UTF8.GetBytes(formattedMessage);
+            
+            using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
+            {
+                await ws.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, cts.Token);
+                
+                byte[] buffer = new byte[4096];
+                WebSocketReceiveResult result = await ws.ReceiveAsync(new ArraySegment<byte>(buffer), cts.Token);
+                string receivedMsg = Encoding.UTF8.GetString(buffer, 0, result.Count);
+
+                if (result.MessageType == WebSocketMessageType.Close)
+                {
+                    throw new WebSocketException("ì„œë²„ê°€ ì—°ê²°ì„ ì¢…ë£Œí–ˆìŠµë‹ˆë‹¤.");
+                }
+
+                requestMsg?.Invoke(true, receivedMsg);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"ìƒˆ ì—°ê²°ë¡œ ë©”ì‹œì§€ ì „ì†¡ ì¤‘ ì˜¤ë¥˜ ë°œìƒ: {ex.Message}");
+            requestMsg?.Invoke(false, $"ì˜¤ë¥˜ ë°œìƒ: {ex.Message}");
+        }
+    }
+
+    [System.Serializable]
+    public class LoginResponse
+    {
+        public string token;
+        public User user;
+    }
+
+    [System.Serializable]
+    public class User
+    {
+        public int id;
+        public string username;
+        public string email;
+        public string userType;
+        public int universityId;
+        public string universityName;
+        public string studentId;
+        public string grade;
+    }
+
     float time = 0;
     private void Update()
     {
-        if (loginOn==false) return;
+        return; // ì ì‹œ ì˜¨ë¼ì¸ ìƒí™© ì…ë ¥ ì •ì§€
+
+        if (loginOn == false)
+        {
+            if(time != 0)
+                time = 0;
+            return;
+        }
 
         time += Time.deltaTime;
 
-        //Debug.Log(time);
         if (time > 40)
         {
             Debug.Log(time);
-            DataBase.Instance.SendMessageApi(data.stu_number.ToString(), "UidCheck", (Success, request) => {
-
+            DataBase.Instance.SendMessageApi(data.email.ToString(), "UidCheck", (Success, request) => {
                 Debug.Log(stu_local_code.ToString());
 
                 if (request != stu_local_code.ToString())
                 {
                     loginOn = false;
-                    Debug.Log("°èÁ¤ÀÌ ´Ù¸§");
+                    SceneManager.LoadScene("1.EnterScene");
+                    Destroy(Instance.gameObject);
+                    Destroy(GameManager.Instance.gameObject);
                 }
             });
 
             if(loginOn)
             {
-                Debug.Log("µ¥ÀÌÅÍ ½Ã°£ ¾÷µ¥ÀÌÆ®");
-                data.time = DateTime.Now.ToString(("mm"));
+                Debug.Log("ì‹œê°„ ì—…ë°ì´íŠ¸");
+                data.time = DateTime.Now.ToString("mm");
                 string jsonData = JsonUtility.ToJson(data);
                 DataBase.Instance.SendMessageApi(jsonData, "Upate", (Success, request) => { });
             }
 
-            //¸¸¾à¿¡ Áö±İ uid ÄÚµå°¡ ¼­¹ö¿¡ ÀÖ´Â°Í°ú ´Ù¸£¸é ·Î±×¾Æ¿ô ÇÒ°Í ( ·Î±×ÀÎ Ã¢À¸·Î ´Ù½Ã º¹±Í)
             time = 0;
+        }
+    }
+
+    private async void OnApplicationQuit()
+    {
+        if (ws.State == WebSocketState.Open)
+        {
+            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Application is quitting", CancellationToken.None);
+            Debug.Log("WebSocket ì—°ê²° ì¢…ë£Œ");
+        }
+    }
+
+    public void Login(string _email, string _password)
+    {
+        if (loginOn) return;
+
+        try
+        {
+            DataBase.Instance.stu_local_code = UnityEngine.Random.Range(1, 2147483646);
+            
+            data = new UserID_Pw
+            {
+                email = _email,
+                password = _password,
+                stu_local_code = DataBase.Instance.stu_local_code,
+                time = DateTime.Now.ToString("mm"),
+                online = true,
+                map_name = "",
+                posPlayerX = 0,
+                posPlayerY = 0,
+                posPlayerZ = 0,
+                modelName = "",
+                modelNum = 0
+            };
+
+            string jsonData = JsonUtility.ToJson(data);
+            Debug.Log($"ë¡œê·¸ì¸ ì‹œë„: {jsonData}");
+
+            SendMessageApi(jsonData, "Login", (Success, request) => {
+                Debug.Log($"ë¡œê·¸ì¸ ì‘ë‹µ: {request}");
+                if(Success && !request.Contains("error"))
+                {
+                    try
+                    {
+                        var response = JsonUtility.FromJson<LoginResponse>(request);
+                        if (response != null && response.user != null && !string.IsNullOrEmpty(response.user.email))
+                        {
+                            dataUser = new PostDataSet
+                            {
+                                stu_name = response.user.username,
+                                stu_password = _password,
+                                stu_number = response.user.email
+                            };
+                            
+                            loginOn = true;
+                            PhotonNetwork.NickName = dataUser.stu_name;
+
+                            // ë¡œê·¸ì¸ ì„±ê³µ í›„ ì¶”ê°€ ìš”ì²­
+                            Task.Run(async () => {
+                                try {
+                                    using (var customWs = new ClientWebSocket()) {
+                                        await customWs.ConnectAsync(new Uri(nodeURL), CancellationToken.None);
+                                        
+                                        // CustomGet ìš”ì²­
+                                        string customDataJson = "{\"email\": \"" + response.user.email + "\"}";
+                                        await SendMessageWithNewConnection(customWs, customDataJson, "CustomGet", (Success, request) => {
+                                            if (Success) {
+                                                UnityMainThreadDispatcher.Instance().Enqueue(() => {
+                                                    try {
+                                                        customData = JsonUtility.FromJson<CustomData>(request);
+                                                        if (customData == null || string.IsNullOrEmpty(customData.modelName))
+                                                        {
+                                                            Debug.LogError("Custom data is invalid or model name is empty");
+                                                        }
+                                                    } catch (Exception ex) {
+                                                        Debug.LogError($"Error processing custom data on main thread: {ex.Message}");
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                        // PosGet ìš”ì²­
+                                        await SendMessageWithNewConnection(customWs, customDataJson, "PosGet", (Success, request) => {
+                                            if (Success) {
+                                                UnityMainThreadDispatcher.Instance().Enqueue(() => {
+                                                    try {
+                                                        UserPos userPos = JsonUtility.FromJson<global::UserPos>(request);
+                                                        if (userPos != null)
+                                                        {
+                                                            GameManager.Instance.userPos = userPos;
+                                                            
+                                                            if (!string.IsNullOrEmpty(GameManager.Instance.userPos.map_name)) {
+                                                                GameManager.Instance.MoveMap(GameManager.Instance.userPos.map_name);
+                                                            } else {
+                                                                GameManager.Instance.MapListOn();
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            Debug.LogError("Failed to parse user position data");
+                                                            GameManager.Instance.MapListOn();
+                                                        }
+                                                    } catch (Exception ex) {
+                                                        Debug.LogError($"Error processing position data on main thread: {ex.Message}");
+                                                        GameManager.Instance.MapListOn();
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                } catch (Exception ex) {
+                                    Debug.LogError($"ì¶”ê°€ ìš”ì²­ ì²˜ë¦¬ ì¤‘ ì˜¤ë¥˜ ë°œìƒ: {ex.Message}");
+                                    GameManager.Instance.MapListOn();
+                                }
+                            });
+                        }
+                        else
+                        {
+                            Debug.LogError("ë¡œê·¸ì¸ ì‹¤íŒ¨: ì„œë²„ ì‘ë‹µ í˜•ì‹ ì˜¤ë¥˜");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError($"ë¡œê·¸ì¸ ì²˜ë¦¬ ì¤‘ ì˜¤ë¥˜ ë°œìƒ: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("ë¡œê·¸ì¸ ì‹¤íŒ¨: ì˜ëª»ëœ ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸");
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"ë¡œê·¸ì¸ ì´ˆê¸°í™” ì¤‘ ì˜¤ë¥˜ ë°œìƒ: {ex.Message}");
         }
     }
 }

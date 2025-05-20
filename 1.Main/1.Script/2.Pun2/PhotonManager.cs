@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
+    //테스트 용
+
+
+
+
     private static PhotonManager instance = null;
     private void Awake()
     {

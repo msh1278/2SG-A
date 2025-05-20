@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Scene
+  m_EditorClassIdentifier: 
+  m_GroupName: Scene
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 75a099317e2b84a4bb4e297d2f23b8e8
+  m_SerializeEntries:
+  - m_GUID: 47eace448087f5a429f0d2eedd4508e2
+    m_Address: LSH
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - LSH
+    - Scene
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a51cd998cf8838541835d73f09216f02
+    m_Address: Photon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Photon
+    - Scene
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3e9ade275626e764f8eefd641d64fe67, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 643797ad1d93e174694d6293965e1efb, type: 2}

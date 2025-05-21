@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
+    private bool chatOn = false;
     [SerializeField]
     CameraMove cm;
     [SerializeField]
@@ -70,8 +71,20 @@ public class PlayerMove : MonoBehaviour
         {
             pv.RPC("Custom", RpcTarget.AllBuffered); // ����ȭ
             chatInput.onEndEdit.AddListener(SendMsgNext);
+            chatInput.onSelect.AddListener(OnChatFocus);
+            chatInput.onDeselect.AddListener(OnChatBlur);
             PosSave();
         }
+    }
+
+    void OnChatFocus(string text)
+    {
+        chatOn = true;
+    }
+
+    void OnChatBlur(string text)
+    {
+        chatOn = false;
     }
 
     void SendMsgNext(string text)
@@ -167,6 +180,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (chatOn) return;
         //if(custom == false) 
         if(animator != null)Move();
 
@@ -320,6 +334,7 @@ public class PlayerMove : MonoBehaviour
     public void SendChat()
     {
         pv.RPC("ReceiveChat", RpcTarget.All, PhotonNetwork.NickName, chatInput.text);
+        chatInput.text = "";
     }
 
     [PunRPC]

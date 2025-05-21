@@ -84,7 +84,10 @@ public class PlayerMove : MonoBehaviour
 
     void OnChatBlur(string text)
     {
-        chatOn = false;
+        if (!Input.GetKeyDown(KeyCode.Space))
+        {
+            chatOn = false;
+        }
     }
 
     void SendMsgNext(string text)

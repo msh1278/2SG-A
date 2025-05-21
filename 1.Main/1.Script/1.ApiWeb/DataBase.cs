@@ -450,11 +450,11 @@ public class DataBase : MonoBehaviour
                                                         {
                                                             GameManager.Instance.userPos = userPos;
                                                             
-                                                            if (!string.IsNullOrEmpty(GameManager.Instance.userPos.map_name)) {
-                                                                GameManager.Instance.MoveMap(GameManager.Instance.userPos.map_name);
-                                                            } else {
-                                                                GameManager.Instance.MapListOn();
-                                                            }
+                                                            //if (!string.IsNullOrEmpty(GameManager.Instance.userPos.map_name)) {
+                                                                //GameManager.Instance.MoveMap(GameManager.Instance.userPos.map_name);
+                                                            //} else {
+                                                                GameManager.Instance.MapListOn();//무조건 리스트 표시
+                                                            //}
                                                         }
                                                         else
                                                         {

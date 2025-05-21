@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [System.Serializable] //직렬화
 public class PostDataSet
@@ -23,7 +24,32 @@ public class LoginManager : MonoBehaviour
     private TMP_InputField id;
     [SerializeField]
     private TMP_InputField name;
+    void Start()
+    {
+        id_login.onEndEdit.AddListener(NextIdInput);
 
+        pw_pasword.onEndEdit.AddListener(LoginBtnNext);
+    }
+
+    void NextIdInput(string text)
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            // 다음 필드로 포커스 이동
+            if (pw_pasword != null)
+            {
+                EventSystem.current.SetSelectedGameObject(pw_pasword.gameObject, null);
+                pw_pasword.OnPointerClick(new PointerEventData(EventSystem.current)); // 커서 위치
+            }
+        }
+    }
+    void LoginBtnNext(string text)
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            Login();
+        }
+    }
     public void SignUp()
     {
         SignUp(

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -63,12 +64,21 @@ public class PlayerMove : MonoBehaviour
             this.enabled = false; // ��ũ��Ʈ ��������
         }
     }
-    private void Start()
+    void Start()
     {
         if (pv.IsMine)
         {
             pv.RPC("Custom", RpcTarget.AllBuffered); // ����ȭ
+            chatInput.onEndEdit.AddListener(SendMsgNext);
             PosSave();
+        }
+    }
+
+    void SendMsgNext(string text)
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            SendChat();
         }
     }
 
@@ -206,6 +216,16 @@ public class PlayerMove : MonoBehaviour
                 pv.RPC("JumpRPC", RpcTarget.All);
             }
 
+
+            if (GameManager.Instance.respawnArea > transform.position.y)
+            {
+                transform.position = GameObject.Find("Start_Point").transform.position;
+                GameManager.Instance.userPos.posPlayerX = transform.position.x;
+                GameManager.Instance.userPos.posPlayerY = transform.position.y;
+                GameManager.Instance.userPos.posPlayerZ = transform.position.z; 
+
+                GameManager.Instance.MoveMap(GameManager.Instance.userPos.map_name);//다시 시작
+            }
 
         }
     }

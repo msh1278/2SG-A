@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private TextMeshProUGUI loadingTextMeshProUGUI;
 
+    public int respawnArea;
+
     private void Awake()
     {
         SoundSet();
@@ -296,6 +298,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             // loadingText.text = "Load Complete!";
             Debug.Log("씬 로드 완료!");
+
+            yield return new WaitForSeconds(3);
+
             PhotonNetwork.JoinOrCreateRoom(SceneManager.GetActiveScene().name, new RoomOptions { MaxPlayers = 20 }, null);
         }
         else

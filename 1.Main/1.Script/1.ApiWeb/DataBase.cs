@@ -81,6 +81,13 @@ public class DataBase : MonoBehaviour
         // Add other custom data fields here
     }
 
+    [System.Serializable]
+    public class CustomResponse
+    {
+        public bool success;
+        public CustomData data;
+    }
+
     private async void Awake()
     {
         // Initialize the main thread dispatcher
@@ -430,14 +437,79 @@ public class DataBase : MonoBehaviour
                                             if (Success) {
                                                 UnityMainThreadDispatcher.Instance().Enqueue(() => {
                                                     try {
-                                                        customData = JsonUtility.FromJson<CustomData>(request);
-                                                        if (customData == null || string.IsNullOrEmpty(customData.modelName))
-                                                        {
-                                                            Debug.LogError("Custom data is invalid or model name is empty");
+                                                        Debug.Log($"CustomGet raw response: {request}"); // 실제 응답 로깅
+                                                        
+                                                        // 먼저 CustomResponse로 시도
+                                                        var customResponse = JsonUtility.FromJson<CustomResponse>(request);
+                                                        if (customResponse != null && customResponse.success && customResponse.data != null) {
+                                                            customData = customResponse.data;
+                                                            Debug.Log($"Custom data loaded successfully from response: {JsonUtility.ToJson(customData)}");
+                                                            
+                                                            // 데이터 유효성 검사
+                                                            if (string.IsNullOrEmpty(customData.modelName)) {
+                                                                Debug.LogWarning("Model name is empty in response, setting default");
+                                                                customData.modelName = "model_1";
+                                                            }
+                                                            if (customData.customNum < 0) {
+                                                                Debug.LogWarning("Invalid custom number in response, setting to 0");
+                                                                customData.customNum = 0;
+                                                            }
+                                                        } else {
+                                                            // CustomResponse 형식이 아니면 CustomData로 직접 시도
+                                                            var directCustomData = JsonUtility.FromJson<CustomData>(request);
+                                                            if (directCustomData != null && !string.IsNullOrEmpty(directCustomData.modelName)) {
+                                                                customData = directCustomData;
+                                                                Debug.Log($"Custom data loaded directly: {JsonUtility.ToJson(customData)}");
+                                                            } else {
+                                                                Debug.LogWarning("Custom data not found or invalid, using default values");
+                                                                customData = new CustomData {
+                                                                    email = response.user.email,
+                                                                    modelName = "model_1",
+                                                                    customNum = 0
+                                                                };
+                                                            }
                                                         }
+
+                                                        // 최종 검증 및 저장
+                                                        PlayerPrefs.SetString("CustomData", JsonUtility.ToJson(customData));
+                                                        PlayerPrefs.Save();
+                                                        Debug.Log($"Final custom data saved: {JsonUtility.ToJson(customData)}");
                                                     } catch (Exception ex) {
-                                                        Debug.LogError($"Error processing custom data on main thread: {ex.Message}");
+                                                        Debug.LogError($"Error processing custom data: {ex.Message}\nResponse: {request}");
+                                                        customData = new CustomData {
+                                                            email = response.user.email,
+                                                            modelName = "model_1",
+                                                            customNum = 0
+                                                        };
+                                                        PlayerPrefs.SetString("CustomData", JsonUtility.ToJson(customData));
+                                                        PlayerPrefs.Save();
                                                     }
+                                                });
+                                            } else {
+                                                Debug.LogError($"CustomGet request failed. Response: {request}");
+                                                UnityMainThreadDispatcher.Instance().Enqueue(() => {
+                                                    // 저장된 커스텀 데이터가 있는지 확인
+                                                    string savedCustomData = PlayerPrefs.GetString("CustomData", "");
+                                                    if (!string.IsNullOrEmpty(savedCustomData)) {
+                                                        try {
+                                                            customData = JsonUtility.FromJson<CustomData>(savedCustomData);
+                                                            Debug.Log($"Loaded saved custom data: {JsonUtility.ToJson(customData)}");
+                                                        } catch {
+                                                            customData = new CustomData {
+                                                                email = response.user.email,
+                                                                modelName = "model_1",
+                                                                customNum = 0
+                                                            };
+                                                        }
+                                                    } else {
+                                                        customData = new CustomData {
+                                                            email = response.user.email,
+                                                            modelName = "model_1",
+                                                            customNum = 0
+                                                        };
+                                                    }
+                                                    PlayerPrefs.SetString("CustomData", JsonUtility.ToJson(customData));
+                                                    PlayerPrefs.Save();
                                                 });
                                             }
                                         });

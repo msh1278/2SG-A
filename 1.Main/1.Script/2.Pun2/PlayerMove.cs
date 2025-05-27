@@ -7,6 +7,9 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading.Tasks;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -88,81 +91,203 @@ public class PlayerMove : MonoBehaviour
     {
         if (animator != null) return;
         Debug.Log(pv.IsMine ? PhotonNetwork.NickName : pv.Owner.NickName);
-        if (DataBase.Instance == null || DataBase.Instance.customData == null)
+        
+        // customData가 없거나 modelName이 비어있으면 저장된 데이터 확인
+        if (DataBase.Instance == null || DataBase.Instance.customData == null || string.IsNullOrEmpty(DataBase.Instance.customData.modelName))
         {
-            Debug.LogError("DataBase.Instance or customData is null!");
-            return;
+            Debug.LogWarning("Custom data not loaded yet, checking saved data");
+            string savedCustomData = PlayerPrefs.GetString("CustomData", "");
+            if (!string.IsNullOrEmpty(savedCustomData))
+            {
+                try
+                {
+                    var savedData = JsonUtility.FromJson<DataBase.CustomData>(savedCustomData);
+                    Debug.Log($"Loaded saved custom data from PlayerPrefs: {savedCustomData}");
+                    
+                    if (DataBase.Instance != null)
+                    {
+                        DataBase.Instance.customData = savedData;
+                        Debug.Log($"Updated DataBase.Instance.customData: {JsonUtility.ToJson(DataBase.Instance.customData)}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Error loading saved custom data: {ex.Message}");
+                    if (DataBase.Instance != null)
+                    {
+                        DataBase.Instance.customData = new DataBase.CustomData
+                        {
+                            email = DataBase.Instance.Data.email,
+                            modelName = "model_1",
+                            customNum = 0
+                        };
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No saved custom data found, using default model");
+                if (DataBase.Instance != null && DataBase.Instance.customData == null)
+                {
+                    DataBase.Instance.customData = new DataBase.CustomData
+                    {
+                        email = DataBase.Instance.Data.email,
+                        modelName = "model_1",
+                        customNum = 0
+                    };
+                }
+            }
         }
 
-        if (string.IsNullOrEmpty(DataBase.Instance.customData.modelName))
+        // 최종 데이터 확인
+        if (DataBase.Instance != null && DataBase.Instance.customData != null)
         {
-            Debug.LogError("Model name is not set in customData!");
-            return;
+            Debug.Log($"Final custom data to be applied: {JsonUtility.ToJson(DataBase.Instance.customData)}");
         }
 
         try
         {
-            GameObject modelInstance = await Addressables.InstantiateAsync(
-                DataBase.Instance.customData.modelName, 
-                animator_Target_P.TransformDirection(Vector3.zero), 
-                Quaternion.identity, 
-                animator_Target_P
-            ).Task;
-
-            if (modelInstance != null)
+            // Addressables 초기화 확인 및 대기
+            if (!Addressables.InitializationOperation.IsDone)
             {
-                //var animatorView = modelInstance.GetComponent<PhotonAnimatorView>();
-                //var transformView = modelInstance.GetComponent<PhotonTransformView>();
-                /*
-                if (animatorView == null || transformView == null)
-                {
-                    Debug.LogError("Required components (PhotonAnimatorView or PhotonTransformView) are missing on the model!");
-                    Addressables.ReleaseInstance(modelInstance);
-                    return;
-                }
+                Debug.Log("Waiting for Addressables initialization...");
+                await Addressables.InitializationOperation.Task;
+                Debug.Log("Addressables initialization completed");
+            }
 
-                animatorView.enabled = true;
-                transformView.enabled = true;
-                */
-                animator = modelInstance.GetComponent<Animator>();
+            // 모델 로드 전에 위치 확인
+            if (animator_Target_P == null)
+            {
+                Debug.LogError("animator_Target_P is null!");
+                return;
+            }
 
-                if (animator == null)
-                {
-                    Debug.LogError("Animator component is missing on the model!");
-                    Addressables.ReleaseInstance(modelInstance);
-                    return;
-                }
+            string modelName = DataBase.Instance.customData.modelName;
+            Debug.Log($"Attempting to load model: {modelName}");
 
-                Transform parent = modelInstance.transform;
-                parent.localPosition = Vector3.zero;
-                
-                bool foundCustomModel = false;
-                for (int i2 = 0; i2 < parent.childCount; i2++)
+            // 모델 로드 시도
+            try
+            {
+                var loadOperation = Addressables.LoadResourceLocationsAsync(modelName);
+                await loadOperation.Task;
+
+                if (loadOperation.Status != AsyncOperationStatus.Succeeded || loadOperation.Result == null || loadOperation.Result.Count == 0)
                 {
-                    GameObject child = parent.GetChild(i2).gameObject;
-                    if (child.name != "Root")
+                    Debug.LogError($"Failed to load model locations for: {modelName}, trying default model");
+                    modelName = "model_1";
+                    loadOperation = Addressables.LoadResourceLocationsAsync(modelName);
+                    await loadOperation.Task;
+                    
+                    if (loadOperation.Status != AsyncOperationStatus.Succeeded || loadOperation.Result == null || loadOperation.Result.Count == 0)
                     {
-                        bool shouldActivate = DataBase.Instance.customData.customNum == i2;
-                        child.SetActive(shouldActivate);
-                        if (shouldActivate) foundCustomModel = true;
+                        Debug.LogError("Failed to load even default model!");
+                        return;
                     }
                 }
 
-                if (!foundCustomModel)
+                // 기존 모델이 있다면 제거
+                if (animator != null)
                 {
-                    Debug.LogWarning($"Custom model number {DataBase.Instance.customData.customNum} not found in children!");
+                    var oldModel = animator.gameObject;
+                    animator = null;
+                    Addressables.ReleaseInstance(oldModel);
                 }
 
-                custom = false;
+                // 모델 인스턴스화
+                var instantiateOperation = Addressables.InstantiateAsync(
+                    modelName,
+                    animator_Target_P.position,
+                    Quaternion.identity,
+                    animator_Target_P
+                );
+
+                await instantiateOperation.Task;
+
+                if (instantiateOperation.Status != AsyncOperationStatus.Succeeded)
+                {
+                    Debug.LogError($"Failed to instantiate model: {instantiateOperation.OperationException?.Message}");
+                    return;
+                }
+
+                GameObject modelInstance = instantiateOperation.Result;
+                if (modelInstance != null)
+                {
+                    animator = modelInstance.GetComponent<Animator>();
+
+                    if (animator == null)
+                    {
+                        Debug.LogError("Animator component is missing on the model!");
+                        Addressables.ReleaseInstance(modelInstance);
+                        return;
+                    }
+
+                    Transform parent = modelInstance.transform;
+                    parent.localPosition = Vector3.zero;
+                    
+                    bool foundCustomModel = false;
+                    for (int i2 = 0; i2 < parent.childCount; i2++)
+                    {
+                        GameObject child = parent.GetChild(i2).gameObject;
+                        if (child.name != "Root")
+                        {
+                            bool shouldActivate = DataBase.Instance.customData.customNum == i2;
+                            child.SetActive(shouldActivate);
+                            if (shouldActivate) foundCustomModel = true;
+                            Debug.Log($"Child model {i2} activated: {shouldActivate}");
+                        }
+                    }
+
+                    if (!foundCustomModel)
+                    {
+                        Debug.LogWarning($"Custom model number {DataBase.Instance.customData.customNum} not found in children!");
+                        // 첫 번째 모델 활성화
+                        if (parent.childCount > 1)
+                        {
+                            parent.GetChild(1).gameObject.SetActive(true);
+                            Debug.Log("Activated first available child model");
+                        }
+                    }
+
+                    custom = false;
+                    Debug.Log($"Model {modelName} loaded and set up successfully with custom number {DataBase.Instance.customData.customNum}");
+                }
+                else
+                {
+                    Debug.LogError("Failed to instantiate model from Addressables!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Debug.LogError("Failed to instantiate model from Addressables!");
+                Debug.LogError($"Error during model loading: {ex.Message}\n{ex.StackTrace}");
+                throw;
             }
         }
         catch (System.Exception e)
         {
             Debug.LogError($"Error in Custom(): {e.Message}\n{e.StackTrace}");
+            // 에러 발생 시 기본 모델로 시도
+            try
+            {
+                if (DataBase.Instance != null)
+                {
+                    DataBase.Instance.customData = new DataBase.CustomData
+                    {
+                        email = DataBase.Instance.Data.email,
+                        modelName = "model_1",
+                        customNum = 0
+                    };
+                    PlayerPrefs.SetString("CustomData", JsonUtility.ToJson(DataBase.Instance.customData));
+                    PlayerPrefs.Save();
+                    
+                    // 잠시 대기 후 재시도
+                    await Task.Delay(1000);
+                    Custom();
+                }
+            }
+            catch (System.Exception retryEx)
+            {
+                Debug.LogError($"Failed to retry with default model: {retryEx.Message}");
+            }
         }
     }
     // Update is called once per frame

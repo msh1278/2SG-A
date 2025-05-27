@@ -299,7 +299,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             // loadingText.text = "Load Complete!";
             Debug.Log("씬 로드 완료!");
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2);
 
             PhotonNetwork.JoinOrCreateRoom(SceneManager.GetActiveScene().name, new RoomOptions { MaxPlayers = 20 }, null);
         }
@@ -308,6 +308,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             // loadingText.text = "Failed to load scene!";
             Debug.LogError("씬 로드 실패");
         }
+        yield return new WaitForSeconds(1);
         loading.SetActive(false);
     }
     public override void OnDisconnected(DisconnectCause cause)

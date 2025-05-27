@@ -179,11 +179,13 @@ public class PlayerMove : MonoBehaviour
     {
         if (pv.IsMine)
         {
+            /*
             if(Input.GetMouseButtonDown(0))
             {
                 pv.RPC("Animation", RpcTarget.All, "MoveNum", 4);
                 return;
             }
+            */
             #if UNITY_ANDROID || UNITY_IOS//|| UNITY_EDITOR
                 float x = joystick.direction.x;
                 float z = joystick.direction.y;
@@ -194,14 +196,12 @@ public class PlayerMove : MonoBehaviour
             #endif
             Vector3 axis;
 
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
+            if (Input.GetKey(KeyCode.LeftControl))
                 axis = speed * transform.TransformDirection(new Vector3(x, 0, z).normalized);
-            }
+            else if (Input.GetKey(KeyCode.LeftShift))
+                axis = speed * 2f * transform.TransformDirection(new Vector3(x, 0, z).normalized);
             else
-            {
-                axis = speed * 2 * transform.TransformDirection(new Vector3(x, 0, z).normalized);
-            }
+                axis = speed * 1.5f * transform.TransformDirection(new Vector3(x, 0, z).normalized);
 
             /*
             animator_Target_P.LookAt(animator_Target_P.position + axis);
@@ -214,10 +214,12 @@ public class PlayerMove : MonoBehaviour
 
             if (axis != Vector3.zero)
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftControl))
                     pv.RPC("Animation", RpcTarget.All,"MoveNum",2);
-                else
+                else if (Input.GetKey(KeyCode.LeftShift))
                     pv.RPC("Animation", RpcTarget.All, "MoveNum", 1);
+                else
+                    pv.RPC("Animation", RpcTarget.All, "MoveNum", 3);
                 //animator.SetInteger("MoveNum", 1);
             }
             else

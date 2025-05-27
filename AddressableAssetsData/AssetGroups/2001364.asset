@@ -1,0 +1,648 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: 2001364
+  m_EditorClassIdentifier: 
+  m_GroupName: 2001364
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f03fca31d0050374087c4cdfa8cca425
+  m_SerializeEntries:
+  - m_GUID: 01e52a619eb2cfb4fb6ae8a37fcc9ef0
+    m_Address: PolygonGangWarfare_Vehicle_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 04b7bb4212f0e9b498769b2077336c89
+    m_Address: PolygonFarm_Texture_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c70d3763b810b1498e306f09e346df8
+    m_Address: Emissive_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 11dd85058ca3acc4daf542ec90e8e7fb
+    m_Address: PolygonOffice_Texture_Sceen_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14d2b6e1919e77f4ea7542a3967748e6
+    m_Address: PolygonNature_Leaves_Willow_LOD_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18f32a469c2284442a3f628d30c5a305
+    m_Address: Tree_Dead_Branch
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d505074c9a727247bb2877b85c922c5
+    m_Address: Leaves_Pine_MaskTexture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2072519f41d197b45be2535871372287
+    m_Address: PolygonMilitary_Mat_Air_Large_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 281a4c418aae1104eaf0626b78d547ed
+    m_Address: PolygonGangWarfare_Material_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2902fd4bd2da5b443b13a9a44a74789b
+    m_Address: Black
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c5d50796bb2ed74684f63b7f71b7e30
+    m_Address: PolygonFarm_Texture_Metallic_Dirt
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d4d2ed696e5ade49ae50d4e19151de5
+    m_Address: PolygonCity_Glass_Veh_Mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2da74f2130b2ca74faacbcaaa83c5a44
+    m_Address: PolygonCity_Texture_Metallic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2edd58f7c433e934db9029c375173b44
+    m_Address: PolygonNature_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f834016e53f12c42a12baecd4450e34
+    m_Address: PolygonOffice_Material_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32a7d9275f65e894c84e0dcdcf05e4e0
+    m_Address: PolygonNature_Leaves_Pine_LOD_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 342e0379ca7eebc4d8c0cdb8c8d8ab76
+    m_Address: PolygonOffice_Texture_Sceen_Arcade_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 344af90ed60f96447801596dc5194c70
+    m_Address: PolygonCity_Texture_01_B
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3526f85d076f8f541bbad248bffe2aba
+    m_Address: PolygonGangWarfare_Material_04_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3635b8bf677082d4ba3e66faa1d21d73
+    m_Address: Cloud_Mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36feb82263c3ae54b9317c97603a3bce
+    m_Address: PolygonCity_Texture_03_B
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d74e8ca339c0b3409c01f7408066170
+    m_Address: PolygonGangWarfare_Texture_03_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4358b945d59bcc54a8d357279a0d3567
+    m_Address: BillboardAds
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 445a42c0cad2b7246a398f2de7b9071c
+    m_Address: PolygonGangWarfare_Vehicle_03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 44fe53d0e7db1d74b995e75b902e7295
+    m_Address: Birch_Trunk_Texture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45f78d57c831abe43a9f7102116e69af
+    m_Address: PolygonNature_Birch_Trunk
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48843a2db7a47754f9c8d6ae390ebf4b
+    m_Address: PolygonMilitary_Mat_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49ef76ea47782eb4b93ac08b234fd6c3
+    m_Address: PolygonCity_Mat_02_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ccd9521bc19372458f9dda2e76fbce6
+    m_Address: PolygonNature_Water
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f4773d4775debb408086688134a13f2
+    m_Address: Air_Veh_Large_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50755c7dbb17b84429570eba70cc6e92
+    m_Address: PolygonGangWarfare_Emissive_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53cf5c0ff424ff9458c56526516b63ec
+    m_Address: Billboard_Mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 564f29d2c3b83c04bb90ba2d657b2421
+    m_Address: PolygonCity_Texture_02_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57b3870b47b9c7f4a92bfe517bf7d8b7
+    m_Address: PolygonGangWarfare_Glass_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5ad23908d1f12ef408aa3e1fffa3edb1
+    m_Address: PolygonFarm_Glass
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5bcafdb535777e948be8fb9202cb4a93
+    m_Address: PolygonApocalypse_Veh_Texture_01_Mud
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5be367dffa6dac448b585fe12407f916
+    m_Address: PolygonCity_Road_Normal
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 611d398dfa4b6ec4885e04eb9698b56f
+    m_Address: PolygonFarm_Texture_02_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 62e25ef75a2216f418d06453c9ad15cb
+    m_Address: PolygonCity_Mat_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 63070be2573ac6640a080b00e06cc159
+    m_Address: PolygonOffice_Texture_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6468ce8e93c861f4ebaff024ef7cda8d
+    m_Address: PolygonOffice_Material_Screen_05
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 666c5768a0f54d34295439b7ba464ea6
+    m_Address: PolygonOffice_Material_Screen_03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69422208bb7cbfb46a1a4e60390d653b
+    m_Address: PolygonGangWarfare_Texture_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b7c7c892819c2645853bd7be049af09
+    m_Address: PolygonGangWarfare_Vehicle_03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6cff7c801e0232143a019be6992ae26e
+    m_Address: PolygonNature_Leaves_Willow_Pink
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f5293b1c95ca1a418dc8232e9cfb3ef
+    m_Address: Blue
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 709584fecc50aba4aa08d0c1e88ef7ec
+    m_Address: PolygonMilitary_Land_Vehicles_03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c26cf0bfe31c4247ad0de127e8e305f
+    m_Address: PolygonApocalypse_Material_Vehicle_Standard_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 822f2495881c757478b3661b1e47c074
+    m_Address: PolygonCity_Road_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 830fc72bc2c8075489b0a150dbd0ca1c
+    m_Address: Leaves_Willow_Texture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8364842b73be77f4db30e02df407798d
+    m_Address: PolygonGangWarfare_Vehicle_Emission_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b3b5dcefb13f9749adfaa0009fa7561
+    m_Address: PolygonCity_Texture_01_C
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d6dbba04bf21784ea83db299e1d8550
+    m_Address: PolygonCity_Texture_Skyline
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 903f5bea429db3047b939ac2174cb15b
+    m_Address: PolygonGangWarfare_Material_03_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9415d5fbf987e4d47b3c90bea3a0d824
+    m_Address: PolygonCity_Mat_Road_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97942cb5527e6f24eb8b8f5c86f8744d
+    m_Address: PolygonCity_Mat_03_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9815abc3682332c43bb766decd901afb
+    m_Address: PolygonNature_Tree_Trunk
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99c4608ee9333d248989392de94081fd
+    m_Address: emissive
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ddc0585f1835fa42a5c45259352476d
+    m_Address: PolygonGangWarfare_Vehicle_04
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5109e8b4c3446f4c84cd8850b84a09a
+    m_Address: PolygonOffice_Texture_Sceen_05
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6f307ed54af22a41ac0875b84aed3a9
+    m_Address: PolygonNature_Leaves_Willow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a77d1ab09c6f9a040b53b1939745e6c5
+    m_Address: PolygonMilitary_Texture_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8e32d2cd442e564aa46c99f0ae7c0c8
+    m_Address: PolygonCity_Mat_01_B
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae4870cba172f524491e4431ce936a9d
+    m_Address: PolygonCity_Mat_03_B
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2fc9034565b6084bb8519fb97146c01
+    m_Address: PolygonOffice_Material_Screen_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b42db56f667f7254783d12999b83cb7e
+    m_Address: PolygonGangWarfare_Texture_04_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b72e16591230315448c77c827b522ae1
+    m_Address: PolygonNature_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b993ae890161b184188e417d77e0e1a3
+    m_Address: PolygonCity_Texture_Normal
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9eb2539339de154ba6d40f01e7de7ed
+    m_Address: PolygonGangWarfare_Material_02_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: baa504bdc39ed4a4d89c24e64ae6b8e5
+    m_Address: Leaves_Generic_MaskTexture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb694a94be4a3c64ca9ef44c62415782
+    m_Address: PolygonCity_Mat_04_C
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc5b6eba09de2524ba62622e5d8e2ec6
+    m_Address: Leaves_Pine_Texture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf41be9e74875804c91333542b6a1da4
+    m_Address: PolygonMilitary_Mat_Land_Vehicles_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c01b7c8cb1175b54aab24b670c2d58dd
+    m_Address: PolygonCity_Mat_01_C
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c29d9dff2056b1543bbb70ec32427a62
+    m_Address: PolygonCity_Glass_Mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c423c8f01e0011b418e7bb32ddd234b8
+    m_Address: PolygonGangWarfare_Texture_02_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7a5b7126209aa64cbad9c843605f9c8
+    m_Address: PolygonMilitary_Texture_01_A_Normals
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb85d02347a64c14195e1ea916e67460
+    m_Address: Leaves_Willow_MaskTexture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce6a258e463fd9e44b1c152d46f12928
+    m_Address: PolygonMilitary_Glass_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cee406e736c18544685de2c3bc2b1c2e
+    m_Address: PolygonOffice_Material_Screen_06
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2085ccbd691b134ba81f1666e575f92
+    m_Address: PolygonCity_Texture_04_C
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3a600439af714f4280d93e74cc75853
+    m_Address: PolygonNature_Leaves_Base
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4156ce4a0acb374eaceabd8e5c3146c
+    m_Address: PolygonCity_Texture_04_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5b1fa07021730d4fb778591be4374f3
+    m_Address: PolygonNature_Leaves_Willow_LOD_01_Pink
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d71c534a86de0e1409d44aa86be7d45e
+    m_Address: PolygonOffice_Material_Glass
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d782eb9dd0e7bf149bcc879a4da28434
+    m_Address: PolygonNature_Leaves_Base_LOD_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d85b0c991d7ab78488a309346114f2f4
+    m_Address: Skyline_Mat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1f54bdf015ca854499e28adf35f2de1
+    m_Address: PolygonNature_Tree_Dead
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e464ad67231c61e4d945edfb3add0259
+    m_Address: PolygonGangWarfare_Vehicle_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e67c1760eb8372147963f558a3eda112
+    m_Address: PolygonFarm_Texture_Metallic
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e88ff96768daf224da52818f026ab171
+    m_Address: Leaves_Willow_EmissiveTexture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed8c76cfaa7f4f04da86bd288543e61c
+    m_Address: Emissive_01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eda6dccd9f725b14ab0c77266ee42429
+    m_Address: PolygonNature_Plants
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edcc9437d18da5f4799d691834617715
+    m_Address: PolygonGangWarfare_Vehicle_04
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee5d59fcc8497a641905c26644c20880
+    m_Address: PolygonCity_Mat_04_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f01e6f8d0a1de17499e1f961823b7931
+    m_Address: PolygonOffice_Texture_Sceen_03
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f27bd715d4b31fb429fa758cb6ae47d0
+    m_Address: Leaves_Willow_MaskTexture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f400510a4489b144dbe067e5a2d848e9
+    m_Address: Green
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5c48780090280a41b793512dfce44c9
+    m_Address: PolygonCity_Texture_03_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6719627c8a45d1459ff89b93a967b05
+    m_Address: Leaves_Generic_Texture
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fbde5f73f39181f4d9c7e24c34f0bdf8
+    m_Address: PolygonCity_Texture_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fcf73fdc6bcbef7458fa48497bdf600a
+    m_Address: PolygonFarm_02_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fdf18c58b725a2f469593ece1786d307
+    m_Address: PolygonFarm_01_A
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: feab95a1ad51daa4caeb40403608aa12
+    m_Address: PolygonNature_Leaves_Pine
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3e9ade275626e764f8eefd641d64fe67, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3e3e0deb0994a814e82bfd1aa10ff626, type: 2}

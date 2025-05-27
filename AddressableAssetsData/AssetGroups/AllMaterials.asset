@@ -49,6 +49,7 @@ MonoBehaviour:
     m_Address: Lit
     m_ReadOnly: 0
     m_SerializedLabels:
+    - 2001364
     - LSH
     - Photon
     FlaggedDuringContentUpdateRestriction: 0
@@ -63,6 +64,7 @@ MonoBehaviour:
     m_Address: Dungeon_Material_01
     m_ReadOnly: 0
     m_SerializedLabels:
+    - 2001364
     - LSH
     - Photon
     FlaggedDuringContentUpdateRestriction: 0
@@ -140,6 +142,7 @@ MonoBehaviour:
     m_Address: Emmisive_01
     m_ReadOnly: 0
     m_SerializedLabels:
+    - 2001364
     - LSH
     - Photon
     FlaggedDuringContentUpdateRestriction: 0
@@ -154,6 +157,7 @@ MonoBehaviour:
     m_Address: Dungeons_Texture_01
     m_ReadOnly: 0
     m_SerializedLabels:
+    - 2001364
     - LSH
     - Photon
     FlaggedDuringContentUpdateRestriction: 0
@@ -168,6 +172,7 @@ MonoBehaviour:
     m_Address: Dungeons_Crystal_Metallic
     m_ReadOnly: 0
     m_SerializedLabels:
+    - 2001364
     - LSH
     - Photon
     FlaggedDuringContentUpdateRestriction: 0

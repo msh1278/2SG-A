@@ -50,6 +50,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 178ffb576eaecde4d8084e4a9b68f390, type: 2}
   - {fileID: 11400000, guid: d2c5e559999230c4c8285d5505ba31e1, type: 2}
   - {fileID: 11400000, guid: 8c315808a6377fb40a8aa428797ed74b, type: 2}
+  - {fileID: 11400000, guid: 02b4f66252287f147b6d2b368749b975, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -109,6 +110,7 @@ MonoBehaviour:
     - LSH
     - Scene
     - Photon
+    - 2001364
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9434a829e6a9e6a41a035a29efa718af, type: 2}

@@ -24,6 +24,13 @@ MonoBehaviour:
     - LSH
     - Scene
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86b172e80e851224ab93b61faaff1713
+    m_Address: 2001364
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - 2001364
+    - Scene
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a51cd998cf8838541835d73f09216f02
     m_Address: Photon
     m_ReadOnly: 0

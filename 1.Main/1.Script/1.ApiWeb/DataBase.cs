@@ -416,6 +416,8 @@ public class DataBase : MonoBehaviour
                             loginOn = true;
                             PhotonNetwork.NickName = dataUser.stu_name;
 
+                            PlayerPrefs.SetString("email", data.email);
+                            //PlayerPrefs.SetString("password", data.password);
                             // 로그인 성공 후 추가 요청
                             Task.Run(async () => {
                                 try {

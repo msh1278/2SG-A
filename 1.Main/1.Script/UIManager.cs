@@ -69,11 +69,4 @@ public class UIManager : MonoBehaviour
     {
         GameManager.Instance.MoveMap("Custom"); // 커스텀으로 이동
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.C)&& GameManager.Instance.userPos.map_name != "SignUp")
-        {
-            MoveCustom();
-        }
-    }
 }

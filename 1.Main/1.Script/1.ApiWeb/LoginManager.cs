@@ -29,6 +29,11 @@ public class LoginManager : MonoBehaviour
         id_login.onEndEdit.AddListener(NextIdInput);
 
         pw_pasword.onEndEdit.AddListener(LoginBtnNext);
+        if (PlayerPrefs.HasKey("email"))
+        {
+            id_login.text = PlayerPrefs.GetString("email");
+            //pw_pasword.text = PlayerPrefs.GetString("password");
+        }
     }
 
     void NextIdInput(string text)
